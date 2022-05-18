@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_mxlogger/flutter_mxlogger.dart';
 
 import 'package:flutter_mxlogger_analyzer/src/theme/mx_theme.dart';
 import 'package:flutter_mxlogger_analyzer/src/widget/log_listview.dart';
@@ -29,8 +29,9 @@ class _MXLoggerLogPageState extends State<MXLoggerLogPage> {
 
   void loadMoreData(){
 
-    List<String> msgList =   MXLogger.selectLogMsg(
-        diskcacheFilePath: widget.logPath);
+    File file =  File(widget.logPath);
+
+    List<String> msgList = file.readAsLinesSync();
 
     List<Map<String, dynamic>> _list = [];
     for (var element in msgList) {
@@ -39,7 +40,7 @@ class _MXLoggerLogPageState extends State<MXLoggerLogPage> {
         _list.add(map);
       }
     }
-    dataSource = _list;
+    dataSource = _list.reversed.toList();
     setState(() {
 
     });

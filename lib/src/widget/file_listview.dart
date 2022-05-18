@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_mxlogger/flutter_mxlogger.dart';
 import 'package:flutter_mxlogger_analyzer/src/theme/mx_theme.dart';
 
 typedef FileItemTapCallback = void Function(String fileName,int size);
@@ -20,7 +21,31 @@ class _FileListViewState extends State<FileListView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _dataSource =  MXLogger.selectLogfiles(directory: widget.dirPath);
+    _initData();
+
+
+  }
+  void _initData() async{
+    Directory directory = Directory(widget.dirPath);
+    List<FileSystemEntity> fileList = await directory.list().toList();
+    fileList.forEach((element) {
+      Map<String,dynamic> _map = {};
+       FileStat state =   element.statSync();
+       _map["time"] = state.changed;
+      _map["size"] = state.size;
+      _map["name"] = element.path.split("/").last;
+      _dataSource.add(_map);
+    });
+    _dataSource.sort((Map<String,dynamic> a,Map<String,dynamic> b){
+      DateTime t1 = a["time"];
+      DateTime t2 = b["time"];
+
+      return t2.compareTo(t1);
+    });
+    setState(() {
+
+    });
+
   }
 
   @override
@@ -29,10 +54,8 @@ class _FileListViewState extends State<FileListView> {
     return ListView.builder(itemCount: _dataSource.length, itemBuilder: (context,index){
       Map<String,dynamic> map = _dataSource[index];
       String name = map["name"];
-      int timeStemp = map["timestemp"];
+      DateTime dateTime = map["time"];
       int size = map["size"];
-       DateTime  dateTime =  DateTime.fromMillisecondsSinceEpoch(timeStemp * 1000);
-
       return   GestureDetector(
           onTap: (){
             widget.callback?.call(name,size);

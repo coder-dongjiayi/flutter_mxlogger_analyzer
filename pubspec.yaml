@@ -10,9 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_mxlogger:
-    git:
-      url: http://gs.blingabc.com/flutter/flutter_mxlogger.git
 
 dev_dependencies:
   flutter_test:
