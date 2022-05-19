@@ -10,7 +10,7 @@ class MXTheme{
   static Color debug = const Color.fromRGBO(81, 143, 127, 1);
   static Color info = const Color.fromRGBO(113, 179, 196, 1);
   static Color warn = const Color.fromRGBO(233, 204, 123, 1);
-  static Color error = const Color.fromRGBO(197, 73, 88, 1);
+  static Color error =  Colors.redAccent;
   static Color fatal = const Color.fromRGBO(226, 7, 35, 1);
   static Color tag = const Color(0xB37357FF);
   static Color colorLevel(int level){

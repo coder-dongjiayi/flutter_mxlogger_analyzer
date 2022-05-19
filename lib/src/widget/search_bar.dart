@@ -14,14 +14,11 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child:Column(
-        children: [
-          _search(),
-          _level()
-        ],
-      ),
-
+    return Column(
+      children: [
+        //_search(),
+        _level()
+      ],
     );
   }
   Widget _level(){
