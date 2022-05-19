@@ -60,10 +60,11 @@ class _MXLoggerDetailPageState extends State<MXLoggerDetailPage> {
           const SizedBox(height: 10),
 
           tags(_source["tag"]),
-
-          time(_source["time"]),
-          const SizedBox(height: 10),
+          
           thread("${_source["thread_id"]}", _source["is_main_thread"]),
+
+          const SizedBox(height: 10),
+          time(_source["time"]),
           const SizedBox(height: 10),
           message(_source["msg"])
         ],
