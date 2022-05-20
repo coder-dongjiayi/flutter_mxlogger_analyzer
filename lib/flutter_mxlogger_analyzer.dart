@@ -12,7 +12,7 @@ bool _visible = true;
 
 Offset offset = const Offset(100, 100);
 
-void show(BuildContext materialContext, String dir) {
+void show(OverlayState overlayState, String dir) {
   if (_analyzerOverlayEntry != null) return;
 
   _analyzerOverlayEntry = OverlayEntry(builder: (context) {
@@ -28,7 +28,7 @@ void show(BuildContext materialContext, String dir) {
 
             _visible = false;
             _analyzerOverlayEntry?.markNeedsBuild();
-            await _showModalBottomSheet(materialContext, dir);
+            await _showModalBottomSheet(context, dir);
             _visible = true;
             _analyzerOverlayEntry?.markNeedsBuild();
           },
@@ -38,8 +38,8 @@ void show(BuildContext materialContext, String dir) {
           ),
         ));
   });
+  overlayState.insert(_analyzerOverlayEntry!);
 
-  Overlay.of(materialContext)?.insert(_analyzerOverlayEntry!);
 }
 
 Widget _analyzerIcon() {
@@ -72,7 +72,7 @@ Future<void> _showModalBottomSheet(BuildContext context, String dir) {
       backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
       builder: (_) {
         return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: MediaQuery.of(context).size.height * 0.6,
           width: MediaQuery.of(context).size.width,
 
           child: MXLoggerAnalyzer(logDir: dir),

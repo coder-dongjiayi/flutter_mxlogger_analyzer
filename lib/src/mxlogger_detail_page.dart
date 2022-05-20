@@ -57,10 +57,8 @@ class _MXLoggerDetailPageState extends State<MXLoggerDetailPage> {
             ],
           ),
 
-          const SizedBox(height: 10),
-
           tags(_source["tag"]),
-          
+
           thread("${_source["thread_id"]}", _source["is_main_thread"]),
 
           const SizedBox(height: 10),
@@ -83,7 +81,7 @@ class _MXLoggerDetailPageState extends State<MXLoggerDetailPage> {
     }
 
     return Padding(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10,bottom: 10),
         child: Row(
           children: List.generate(tagList.length, (index) {
             return _tag(tagList[index]);

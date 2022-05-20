@@ -22,11 +22,12 @@ class MXLoggerLogPage extends StatefulWidget {
 
 class _MXLoggerLogPageState extends State<MXLoggerLogPage> {
 
+  Future<List<Map<String, dynamic>>>? _future;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    _future = _requestSource();
   }
 
   Future<List<Map<String, dynamic>>> _requestSource({String? keyWord}){
@@ -59,15 +60,35 @@ class _MXLoggerLogPageState extends State<MXLoggerLogPage> {
     return Scaffold(
       backgroundColor: MXTheme.themeColor,
       appBar: AppBar(
-        leadingWidth: 0,
+
         toolbarHeight: 60,
         backgroundColor: MXTheme.itemBackground,
         elevation: 0,
-        leading: const SizedBox(),
-        title: const SearchBar(),
+        leading: GestureDetector(
+          onTap: (){
+            Navigator.of(context).pop();
+          },
+          child: Icon(Icons.arrow_back,color: MXTheme.white),
+        ),
+        title: Text("MXAnalyzer",style: TextStyle(color: MXTheme.white)),
+       actions: [
+         GestureDetector(
+           onTap: () {
+             _future = _requestSource();
+             setState(() {});
+           },
+           child: Padding(
+             padding: EdgeInsets.only(right: 20),
+             child: Icon(
+               Icons.refresh,
+               color: MXTheme.info,
+             ),
+           ),
+         )
+       ],
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _requestSource(),
+        future: _future,
           builder:
           (BuildContext context,
               AsyncSnapshot<List<Map<String, dynamic>>>? snapshot) {
